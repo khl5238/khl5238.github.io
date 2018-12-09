@@ -44,7 +44,7 @@
                         <a class="nav-link js-scroll-trigger text-dark" href="#about">介紹</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger text-dark" href="#services">寄賣服務</a>
+                        <a class="nav-link js-scroll-trigger text-dark" href="/map.html">寄賣服務</a>
                     </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link js-scroll-trigger text-dark" href="#portfolio">Portfolio</a>
@@ -97,50 +97,7 @@
                     <h2 class="section-heading text-white">解決定價困擾</h2>
                     <hr class="light my-4">
                     <p class="text-faded mb-4">傳統的運銷模式中，農民往往是最弱勢的那群，大部分的農民只能被動的接受收購價格，常常血本無歸，而中間影響最大的因素為整個農產運銷體制的高額管銷費用，故希望透過本計畫，以寄賣模式把銷售的主導權給予農民，並透過大數據分析的方式給予農民合理客觀的定價，以穩定市場機制避免失衡，並讓農民的利益最大化，以提高農民收益。</p>
-                    <a class="btn btn-light btn-xl js-scroll-trigger" href="#services">開始寄賣!</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="services">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">寄賣服務</h2>
-                    <hr class="my-4">
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-3 text-center">
-                    <div class="service-box mt-5 mx-auto">
-                        <i class="fas fa-4x fa-gem text-primary mb-3 sr-icon-1"></i>
-                        <h3 class="mb-3">待設計的寄賣服務</h3>
-                        <p class="text-muted mb-0">還沒設計還沒設計還沒設計還沒設計還沒設計還沒設計還沒設計還沒設計還沒設計還沒設計還沒設計</p>
-                    </div>
-                </div>
-                <div class="col-sm-3 text-center">
-                    <div class="service-box mt-5 mx-auto">
-                        <i class="fas fa-4x fa-paper-plane text-primary mb-3 sr-icon-2"></i>
-                        <h3 class="mb-3">待設計的寄賣服務</h3>
-                        <p class="text-muted mb-0">還沒設計還沒設計還沒設計還沒設計還沒設計還沒設計還沒設計還沒設計還沒設計還沒設計還沒設計</p>
-                    </div>
-                </div>
-                <div class="col-sm-3 text-center">
-                    <div class="service-box mt-5 mx-auto">
-                        <i class="fas fa-4x fa-code text-primary mb-3 sr-icon-3"></i>
-                        <h3 class="mb-3">待設計的寄賣服務</h3>
-                        <p class="text-muted mb-0">還沒設計還沒設計還沒設計還沒設計還沒設計還沒設計還沒設計還沒設計還沒設計還沒設計還沒設計</p>
-                    </div>
-                </div>
-                <div class="col-sm-3 text-center">
-                    <div class="service-box mt-5 mx-auto">
-                        <i class="fas fa-4x fa-heart text-primary mb-3 sr-icon-4"></i>
-                        <h3 class="mb-3">待設計的寄賣服務</h3>
-                        <p class="text-muted mb-0">還沒設計還沒設計還沒設計還沒設計還沒設計還沒設計還沒設計還沒設計還沒設計還沒設計還沒設計</p>
-                    </div>
+                    <a class="btn btn-light btn-xl js-scroll-trigger" href="/map.html">開始寄賣!</a>
                 </div>
             </div>
         </div>
@@ -225,6 +182,10 @@
     <!-- Custom scripts for this template -->
     <script src="js/creative.min.js"></script>
 
+
+
+
+
     <!-- FireBase -->
     <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
     <!-- Firebase App is always required and must be first -->
@@ -251,14 +212,29 @@
         var database = firebase.database();
         // firebase.database().ref('myFriends').set({friend1:'tom',friend2:'bob'});
         var veg = firebase.database().ref();
-        veg.on('value',function(snapshot){
-            var str=snapshot.val();
-            document.getElementById('test').textContent=JSON.stringify(str,null,3);
+        veg.on('value', function (snapshot) {
+            var str = snapshot.val();
+            document.getElementById('test').textContent = JSON.stringify(str, null, 3);
 
         })
 
         // console.log(database);
     </script>
+
+
+
+    <!-- Google Map -->
+    <!-- <script>
+        var map;
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: -34.397, lng: 150.644 },
+                zoom: 8
+            });
+        }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgU2NjJsgGahQTaDwLef6Ah2BIZ72cBsk&callback=initMap">    
+    </script> -->
 </body>
 
 </html>

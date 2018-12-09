@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>寄賣服務</title>
+    <style>
+        #map {
+            height: 100%;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <div id="map"></div>
+
+    <!-- Google Map -->
+    <script>
+
+        function initMap() {
+            var map;
+            var marker = [];
+            var icons = [
+                { label: 'A', lat: 24.137968, lng: 120.683056, scale: 35, fillColor: 'red' },
+                { label: 'B', lat: 24.160685, lng: 120.670182, scale: 20, fillColor: 'black' }
+            ];
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 24.137968, lng: 120.683056 },
+                zoom: 14
+            });
+            for (var i = 0; i < icons.length; i++) {
+                addMarker(i);
+            }
+            function addMarker(e) {
+                marker[e] = new google.maps.Marker({
+                    position: {
+                        lat: icons[e].lat,
+                        lng: icons[e].lng
+                    },
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: icons[e].scale,
+                        fillColor: icons[e].fillColor,
+                        fillOpacity: 0.5,
+                        strokeWeight: 0
+                    },
+                    map:map,
+                    label:{
+                        text:icons[e].label,
+                        color:'white'
+                    }
+                });
+            }
+
+            // var marker = new google.maps.Marker({
+            //     position: { lat: 24.137968, lng: 120.683056 },
+            //     icon: {
+            //         path: google.maps.SymbolPath.CIRCLE,
+            //         scale: 30,
+            //         fillColor: 'red',
+            //         fillOpacity: 0.5,
+            //         strokeWeight: 0
+            //     },
+            //     // draggable: true,
+            //     map: map
+            // });
+        }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgU2NjJsgGahQTaDwLef6Ah2BIZ72cBsk&callback=initMap">
+    </script>
+</body>
+
+</html>
