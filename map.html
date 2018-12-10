@@ -8,7 +8,7 @@
     <title>寄賣服務</title>
     <style>
         #map {
-            height: 100%;
+            height: 80%;
         }
 
         html,
@@ -18,13 +18,68 @@
             padding: 0;
         }
     </style>
+    <style>
+        .box {
+            background-color: gray;
+            height: 20%;
+            /* width:90%; */
+        }
+    </style>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
 </head>
 
 <body>
 
-
-
     <div id="map"></div>
+
+    <div id="container">
+        <div id="detail" class="box fixed-bottom">
+
+            <h3 class="text-center">請選擇寄賣賣場</h3>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- FireBase -->
+    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
+    <!-- Firebase App is always required and must be first -->
+    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-app.js"></script>
+    <!-- Add additional services that you want to use -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-auth.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-database.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-firestore.js"></script> -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-messaging.js"></script> -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-functions.js"></script> -->
+    <script>
+        // Initialize Firebase
+        // TODO: Replace with your project's customized code snippet
+        var config = {
+            apiKey: "AIzaSyCRd98sYM9ddLEg_4twvPtAwx2DkmGdpBE",
+            authDomain: "ai-veg-idea.firebaseapp.com",
+            databaseURL: "https://ai-veg-idea.firebaseio.com",
+            projectId: "ai-veg-idea",
+            storageBucket: "ai-veg-idea.appspot.com",
+            messagingSenderId: "53183679443",
+        };
+        firebase.initializeApp(config);
+        // Get a reference to the database service
+        var database = firebase.database();
+        // firebase.database().ref('myFriends').set({friend1:'tom',friend2:'bob'});
+        var veg = firebase.database().ref();
+        // veg.on('value', function (snapshot) {
+        //     var str = snapshot.val();
+        //     document.getElementById('test').textContent = JSON.stringify(str, null, 3);
+
+        // })
+
+     // console.log(database);
+    </script>
 
     <!-- Google Map -->
     <script>
@@ -33,20 +88,28 @@
             var map;
             var marker = [];
             var icons = [
-                { label: '42', lat: 24.115808, lng: 120.679783, scale: 35, fillColor: 'red' },
-                { label: '35', lat: 24.148000, lng: 120.702431, scale: 20, fillColor: 'black' },
-                { label: '35', lat: 24.152721 , lng: 120.682259, scale: 20, fillColor: 'black' },
-                { label: '35', lat: 24.190302 , lng: 120.612071, scale: 20, fillColor: 'black' },
-                { label: '35', lat: 24.174529 , lng: 120.648149, scale: 20, fillColor: 'black' },
-                { label: '35', lat: 24.153930 , lng: 120.646406, scale: 20, fillColor: 'black' },
-                { label: '35', lat: 24.147110 , lng: 120.636191, scale: 20, fillColor: 'black' },
-                { label: '35', lat: 24.114954 , lng: 120.667008, scale: 20, fillColor: 'black' },
-                { label: '35', lat: 24.266646 , lng: 120.574350, scale: 20, fillColor: 'black' },
-                { label: '35', lat: 24.252062 , lng: 120.715594, scale: 20, fillColor: 'black' }
+                { label: '42', lat: 24.115808, lng: 120.679783, scale: 35, fillColor: 'red', name: '大里大買家店', id: '1' },
+                { label: '35', lat: 24.148000, lng: 120.702431, scale: 20, fillColor: 'black', name: '太平中山店', id: '2' },
+                { label: '35', lat: 24.152721, lng: 120.682259, scale: 20, fillColor: 'black', name: '台中中華店', id: '3' },
+                { label: '35', lat: 24.190302, lng: 120.612071, scale: 20, fillColor: 'black', name: '台中西屯玉門店', id: '4' },
+                { label: '35', lat: 24.174529, lng: 120.648149, scale: 20, fillColor: 'black', name: '台中河南店', id: '5' },
+                { label: '35', lat: 24.153930, lng: 120.646406, scale: 20, fillColor: 'black', name: '台中家樂福文心店', id: '6' },
+                { label: '35', lat: 24.147110, lng: 120.636191, scale: 20, fillColor: 'black', name: '台中黎明店', id: '7' },
+                { label: '35', lat: 24.114954, lng: 120.667008, scale: 20, fillColor: 'black', name: '台中美村南店', id: '8' },
+                { label: '35', lat: 24.266646, lng: 120.574350, scale: 20, fillColor: 'black', name: '清水中山店', id: '9' },
+                { label: '35', lat: 24.252062, lng: 120.715594, scale: 20, fillColor: 'black', name: '豐原源豐店', id: '10' }
             ];
             map = new google.maps.Map(document.getElementById('map'), {
                 center: { lat: 24.169212, lng: 120.643101 },
-                zoom: 12
+                zoom: 12,
+                mapTypeControl: false,
+                streetViewControl: false,
+                zoomControl: false,
+                fullscreenControl: false
+                // mapTypeControlOptions: {
+                //     mapTypeIds: ['coordinate', 'roadmap'],
+                //     style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+                // }
             });
             for (var i = 0; i < icons.length; i++) {
                 addMarker(i);
@@ -62,32 +125,43 @@
                         scale: icons[e].scale,
                         fillColor: icons[e].fillColor,
                         fillOpacity: 0.5,
-                        strokeWeight: 0
+                        strokeWeight: 0,
+                        strokeOpacity: 0
                     },
-                    map:map,
-                    label:{
-                        text:icons[e].label,
-                        color:'white'
-                    }
+                    map: map,
+                    label: {
+                        text: icons[e].label,
+                        color: 'white'
+                    },
+                    zIndex: icons[e].scale   //數字越大越前面，直接以marker大小當zIndex
+                });
+                marker[e].addListener('click', function () {
+                    map.setZoom(15);
+                    map.setCenter(marker[e].getPosition());
+                    veg.on('value', function (snapshot) {
+                        var str = snapshot.val();
+                        document.getElementById('detail').className = "box fixed-bottom visible";
+                        document.getElementById('detail').innerHTML = "<p class='text-center'>" + icons[e].name + "</p>" + JSON.stringify(str, null, 3);
+                    })
+                    // marker[e].setLabel({
+                    //     text: icons[e].name,
+                    //     color: 'white'
+                    // });
+
                 });
             }
-
-            // var marker = new google.maps.Marker({
-            //     position: { lat: 24.137968, lng: 120.683056 },
-            //     icon: {
-            //         path: google.maps.SymbolPath.CIRCLE,
-            //         scale: 30,
-            //         fillColor: 'red',
-            //         fillOpacity: 0.5,
-            //         strokeWeight: 0
-            //     },
-            //     // draggable: true,
-            //     map: map
-            // });
         }
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgU2NjJsgGahQTaDwLef6Ah2BIZ72cBsk&callback=initMap">
     </script>
+
+    <!-- bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
