@@ -8,11 +8,14 @@
     <title>寄賣服務</title>
     <style>
         #map {
-            height: 80%;
+            height: 75%;
         }
-
+        #container {
+            height: 100%;
+        }
         html,
         body {
+            font-family: 'Microsoft JhengHei'!important;
             height: 100%;
             margin: 0;
             padding: 0;
@@ -20,8 +23,8 @@
     </style>
     <style>
         .box {
-            background-color: gray;
-            height: 20%;
+            background-color: white;
+            height: 25%;
             /* width:90%; */
         }
     </style>
@@ -31,13 +34,40 @@
 </head>
 
 <body>
-
-    <div id="map"></div>
-
     <div id="container">
+        <div id="map"></div>
+
+
         <div id="detail" class="box fixed-bottom">
 
-            <h3 class="text-center">請選擇寄賣賣場</h3>
+            <h3 id="storeName" class="text-center">請選擇寄賣賣場</h3>
+            <div class="row">
+                <div class="col-3">
+                    <img class="pl-4" src="/img/cabbage.png" height=50px alt="">
+                </div>
+                <div class="col-6 text-center pt-2">
+                    <h5>推薦賣價：<span id="storePrice" style="color:red;font-size:1.4em" class="font-weight-bold">999</span><span style="font-size: 0.5em">元/粒</span></h5>
+                </div>
+                <div class="col-3">
+                    <button type="button" class="btn btn-danger ">寄賣</button>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-4 text-center">
+                    <h6>賣場距離</h6>
+                    <p>28<small>km</small></p>
+                </div>
+                <div class="col-4 text-center">
+                    <h6>庫存量</h6>
+                    <p>99<small>粒</small></p>
+                </div>
+                <div class="col-4 text-center">
+                    <h6>庫存最低價</h6>
+                    <p>1<small>元/粒</small></p>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -131,7 +161,8 @@
                     map: map,
                     label: {
                         text: icons[e].label,
-                        color: 'white'
+                        color: 'white',
+                        fontSize: '1.8em'
                     },
                     zIndex: icons[e].scale   //數字越大越前面，直接以marker大小當zIndex
                 });
@@ -140,8 +171,8 @@
                     map.setCenter(marker[e].getPosition());
                     veg.on('value', function (snapshot) {
                         var str = snapshot.val();
-                        document.getElementById('detail').className = "box fixed-bottom visible";
-                        document.getElementById('detail').innerHTML = "<p class='text-center'>" + icons[e].name + "</p>" + JSON.stringify(str, null, 3);
+                        document.getElementById('storeName').textContent = icons[e].name;
+                        document.getElementById('storePrice').textContent = icons[e].label;
                     })
                     // marker[e].setLabel({
                     //     text: icons[e].name,
