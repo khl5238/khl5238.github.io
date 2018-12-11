@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box {
+            height: 100px;
+            width: 100%;
+            background: #999;
+            color: white;
+        }
+
+        .fade-enter-active {
+            animation: go 4s;
+        }
+
+        .fade-leave-active {
+            animation: back 1s;
+        }
+        @keyframes go {
+            from {
+                background: #fff;
+            }
+
+            to {
+                background: #999;
+            }
+        }
+
+        @keyframes back {
+            from {
+                background: #999;
+            }
+
+            to {
+                background: #fff;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="alert1">貨品滯銷囉</button>
+        <button @click="alert2">颱風來囉</button>
+        <transition enter-active-class="fade-enter-active" leave-active-class="fade-leave-active">
+            <div class="box" v-if="show"v-html="message"></div>
+        </transition>
+    </div>
+
+
+
+    <!-- <div id="app-2">
+        <span v-bind:title="message">
+            Hover your mouse over me for a few seconds
+            to see my dynamically bound title!
+        </span>
+    </div> -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue!',
+                show: false
+            },
+            methods:{
+                alert1(){
+                    this.show=!this.show;
+                    this.message="【系統通知】<br>貨品滯銷3天囉!<br>建議您將貨品價格調降為9元"
+                },
+                alert2(){
+                    this.show=!this.show;
+                    this.message="【系統通知】<br>颱風即將於下周登陸!<br>建議您將貨品價格調漲為99元"
+                }
+            }
+        })
+
+        // var app2 = new Vue({
+        //     el: '#app-2',
+        //     data: {
+        //         message: 'You loaded this page on ' + new Date().toLocaleString()
+        //     }
+        // })
+
+
+    </script>
+</body>
+
+</html>

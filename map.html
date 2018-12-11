@@ -27,6 +27,40 @@
             height: 25%;
             /* width:90%; */
         }
+        .note{
+            background-color:rgba(100%,100%,100%,1);
+            /* height: 10%; */
+        }
+
+
+        .fade-enter-active {
+            animation: go 1s;
+        }
+
+        .fade-leave-active {
+            animation: back 1s;
+        }
+        @keyframes go {
+            from {
+                background-color:rgba(100%,100%,100%,0);
+            }
+
+            to {
+                background-color:rgba(100%,100%,100%,1);
+            }
+        }
+
+        @keyframes back {
+            from {
+                background-color:rgba(100%,100%,100%,1);
+            }
+
+            to {
+                background-color:rgba(100%,100%,100%,0);
+            }
+        }
+
+
     </style>
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
@@ -35,6 +69,38 @@
 
 <body>
     <div id="container">
+        <div id="app">
+            <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+                <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <button class="mt-2 btn btn-danger" @click="alert1">滯銷情境</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="mt-2 btn btn-danger" @click="alert2">颱風情境</button>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <!-- <div class="row clear-fixed">
+                <div class="col clear-fixed">
+                    <button @click="alert1" class="btn btn-danger float-left">滯銷</button>
+                </div>
+                <div class="col clear-fixed">
+                    <button @click="alert2" class="btn btn-danger float-right">颱風</button>
+                </div>
+            </div> -->
+
+            <transition enter-active-class="fade-enter-active" leave-active-class="fade-leave-active">
+                <div id="notification" class="fixed-top note rounded p-2 m-3" v-if="show" v-html="message"></div>
+            </transition>
+        </div>
+
         <div id="map"></div>
 
 
@@ -46,10 +112,11 @@
                     <img class="pl-4" src="/img/cabbage.png" height=50px alt="">
                 </div>
                 <div class="col-6 text-center pt-2">
-                    <h5>推薦賣價 <span id="storePrice" style="color:red;font-size:1.4em" class="font-weight-bold">99</span><span style="font-size: 0.5em"> 元/粒</span></h5>
+                    <h5>推薦賣價 <span id="storePrice" style="color:red;font-size:1.4em" class="font-weight-bold">99</span><span
+                            style="font-size: 0.5em"> 元/粒</span></h5>
                 </div>
                 <div class="col-3">
-                    <button type="button" class="btn btn-danger ">寄賣</button>
+                    <button type="button" class="btn btn-danger">寄賣</button>
                 </div>
             </div>
 
@@ -72,7 +139,11 @@
     </div>
 
 
-
+    <script>
+        function testNotify1() {
+            document.getElementById('notification').style = "background-color:rgba(100%,100%,100%,0);height: 10%;animation-name: notify;animation-duration: 6s;";
+        }
+    </script>
 
 
 
@@ -193,6 +264,29 @@
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
         crossorigin="anonymous"></script>
+
+    <!-- Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue!',
+                show: false
+            },
+            methods: {
+                alert1() {
+                    this.show = !this.show;
+                    this.message = "【系統通知】<br>貨品滯銷3天囉!<br>建議您將貨品價格調降為9元"
+                },
+                alert2() {
+                    this.show = !this.show;
+                    this.message = "【系統通知】<br>颱風即將於下周登陸!<br>建議您將貨品價格調漲為99元"
+                }
+            }
+        })
+
+    </script>
 </body>
 
 </html>
