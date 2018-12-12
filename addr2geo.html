@@ -14,7 +14,7 @@
 臺北市中山區長春路328號9樓之4</textarea>
     <br>
     <button onclick="trans()">轉換</button>
-    <p>(每0.3秒轉換1筆)</p>
+    <p>(每1.5秒轉換1筆)</p>
     <h2>經緯度 </h2>
     <textarea id="geo" rows="10" cols="70">轉換後經緯度</textarea>
 
@@ -40,7 +40,7 @@
             if (++i == S_address.length) {
                 return;
             }
-            window.setTimeout(delayedLoop, 300);
+            window.setTimeout(delayedLoop, 1500);
         }
         function addressToLatLng(addr) {
             geocoder.geocode({ "address": addr }, function (results, status) {
