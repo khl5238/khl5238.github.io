@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>地址</h2>
+    <textarea id="address" rows="10" cols="70">臺北市信義區松德路275號1樓
+臺北市中山區長春路328號9樓之4</textarea>
+    <br>
+    <button onclick="trans()">轉換</button>
+    <p>(每0.3秒轉換1筆)</p>
+    <h2>經緯度 </h2>
+    <textarea id="geo" rows="10" cols="70">轉換後經緯度</textarea>
+
+
+    <script>
+        var i;
+        var address;
+        var S_address;
+        var geocoder;
+        function initMap() {
+            geocoder = new google.maps.Geocoder();
+        }
+
+        function trans() {
+            i = 0;
+            document.getElementById('geo').value="";
+            address = document.getElementById('address').value;
+            S_address = address.split("\n"); //依換行切割成陣列
+            delayedLoop();
+        }
+        function delayedLoop() {
+            addressToLatLng(S_address[i]);
+            if (++i == S_address.length) {
+                return;
+            }
+            window.setTimeout(delayedLoop, 300);
+        }
+        function addressToLatLng(addr) {
+            geocoder.geocode({ "address": addr }, function (results, status) {
+                addr = "";
+                if (status == google.maps.GeocoderStatus.OK) {
+                    var content = document.getElementById('geo').value;
+                    document.getElementById('geo').value=(content + addr + (results[0].geometry.location.lat()).toFixed(8) + "\t" + (results[0].geometry.location.lng()).toFixed(8) + "\n");
+                }
+                else if (status == google.maps.GeocoderStatus.ZERO_RESULTS) {
+                    alert("您輸入的地址可能不存在!\nThis may occur if the geocoder was passed a non-existent address.");
+                }
+                else if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
+                    alert("經緯度查詢已超過免費配額，明日請早!\nSorry! We are over our quota.");
+                }
+                else if (status == google.maps.GeocoderStatus.REQUEST_DENIED) {
+                    alert("請求被拒絕!\nYour request was denied.");
+                }
+                else {
+                    var content = document.getElementById('geo').value;
+                    document.getElementById('geo').value=(content + addr + "查無經緯度，或系統發生錯誤！" + "\n");
+                }
+            })
+        }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgU2NjJsgGahQTaDwLef6Ah2BIZ72cBsk&callback=initMap">
+    </script>
+</body>
+
+</html>
