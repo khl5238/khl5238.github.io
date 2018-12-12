@@ -38,6 +38,7 @@
         function delayedLoop() {
             addressToLatLng(S_address[i]);
             if (++i == S_address.length) {
+                alert("全數轉換完畢囉!");
                 return;
             }
             window.setTimeout(delayedLoop, 1500);
