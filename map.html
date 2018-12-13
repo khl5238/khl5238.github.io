@@ -99,7 +99,7 @@
                         </li>
                     </ul>
                 </div>
-                
+
             </nav>
 
             <transition enter-active-class="fade-enter-active" leave-active-class="fade-leave-active">
@@ -129,15 +129,15 @@
             <div class="row mt-3">
                 <div class="col-4 text-center">
                     <h6>賣場距離</h6>
-                    <p>28<small>km</small></p>
+                    <p><span id="dist">??</span><small>km</small></p>
                 </div>
                 <div class="col-4 text-center">
                     <h6>庫存量</h6>
-                    <p>99<small>粒</small></p>
+                    <p><span id="stock">??</span><small>粒</small></p>
                 </div>
                 <div class="col-4 text-center">
                     <h6>庫存最低價</h6>
-                    <p>1<small>元/粒</small></p>
+                    <p><span id="stockMinPrice">??</span><small>元/粒</small></p>
                 </div>
             </div>
 
@@ -195,16 +195,16 @@
             var map;
             var marker = [];
             var icons = [
-                { label: '42', lat: 24.115808, lng: 120.679783, scale: 35, fillColor: 'red', name: '大里大買家店', id: '1' },
-                { label: '35', lat: 24.148000, lng: 120.702431, scale: 20, fillColor: 'black', name: '太平中山店', id: '2' },
-                { label: '35', lat: 24.152721, lng: 120.682259, scale: 20, fillColor: 'black', name: '台中中華店', id: '3' },
-                { label: '35', lat: 24.190302, lng: 120.612071, scale: 20, fillColor: 'black', name: '台中西屯玉門店', id: '4' },
-                { label: '35', lat: 24.174529, lng: 120.648149, scale: 20, fillColor: 'black', name: '台中河南店', id: '5' },
-                { label: '35', lat: 24.153930, lng: 120.646406, scale: 20, fillColor: 'black', name: '台中家樂福文心店', id: '6' },
-                { label: '35', lat: 24.147110, lng: 120.636191, scale: 20, fillColor: 'black', name: '台中黎明店', id: '7' },
-                { label: '35', lat: 24.114954, lng: 120.667008, scale: 20, fillColor: 'black', name: '台中美村南店', id: '8' },
-                { label: '35', lat: 24.266646, lng: 120.574350, scale: 20, fillColor: 'black', name: '清水中山店', id: '9' },
-                { label: '35', lat: 24.252062, lng: 120.715594, scale: 20, fillColor: 'black', name: '豐原源豐店', id: '10' }
+                { label: 42, lat: 24.115808, lng: 120.679783, scale: 42, fillColor: 'red', name: '大里大買家店', id: '1' },
+                { label: 35, lat: 24.148000, lng: 120.702431, scale: 24, fillColor: 'black', name: '太平中山店', id: '2' },
+                { label: 38, lat: 24.152721, lng: 120.682259, scale: 30, fillColor: 'black', name: '台中中華店', id: '3' },
+                { label: 35, lat: 24.190302, lng: 120.612071, scale: 22, fillColor: 'black', name: '台中西屯玉門店', id: '4' },
+                { label: 30, lat: 24.174529, lng: 120.648149, scale: 15, fillColor: 'green', name: '台中河南店', id: '5' },
+                { label: 37, lat: 24.153930, lng: 120.646406, scale: 28, fillColor: 'black', name: '台中家樂福文心店', id: '6' },
+                { label: 35, lat: 24.147110, lng: 120.636191, scale: 20, fillColor: 'black', name: '台中黎明店', id: '7' },
+                { label: 36, lat: 24.114954, lng: 120.667008, scale: 24, fillColor: 'black', name: '台中美村南店', id: '8' },
+                { label: 34, lat: 24.266646, lng: 120.574350, scale: 20, fillColor: 'black', name: '清水中山店', id: '9' },
+                { label: 33, lat: 24.252062, lng: 120.715594, scale: 20, fillColor: 'black', name: '豐原源豐店', id: '10' }
             ];
             map = new google.maps.Map(document.getElementById('map'), {
                 center: { lat: 24.169212, lng: 120.643101 },
@@ -230,6 +230,7 @@
                     icon: {
                         path: google.maps.SymbolPath.CIRCLE,
                         scale: icons[e].scale,
+                        // scale: icons[e].label,
                         fillColor: icons[e].fillColor,
                         fillOpacity: 0.5,
                         strokeWeight: 0,
@@ -237,7 +238,7 @@
                     },
                     map: map,
                     label: {
-                        text: icons[e].label,
+                        text: icons[e].label.toString(),
                         color: 'white',
                         fontSize: '1.8em'
                     },
@@ -246,10 +247,44 @@
                 marker[e].addListener('click', function () {
                     map.setZoom(15);
                     map.setCenter(marker[e].getPosition());
+                    //庫存
+                    var stock = 0;
+                    stock=Math.floor(Math.random()*39); 
+                    document.getElementById('stock').textContent = stock;
+                    //庫存最低價
+                    var stockMinPrice = 0;
+                    stockMinPrice=icons[e].label+(Math.floor(Math.random()*4))-2;
+                    document.getElementById('stockMinPrice').textContent = stockMinPrice;
+                    //距離
+                    var origin1 = { lat: 24.169212, lng: 120.643101 };
+                    var destinationA = { lat: marker[e].position.lat(), lng: marker[e].position.lng() };
+                    var distance = 0;
+                    var geocoder = new google.maps.Geocoder;
+
+                    var service = new google.maps.DistanceMatrixService;
+                    service.getDistanceMatrix({
+                        origins: [origin1],
+                        destinations: [destinationA],
+                        travelMode: 'DRIVING',
+                        unitSystem: google.maps.UnitSystem.METRIC,
+                        avoidHighways: false,
+                        avoidTolls: false
+                    }, function (response, status) {
+                        if (status !== 'OK') {
+                            alert('Error was: ' + status);
+                        } else {
+                            distance = ((response.rows[0].elements[0].distance.value) / 1000).toFixed(0);
+                            // console.log(distance);
+                            //顯示距離
+                            document.getElementById('dist').textContent = distance;
+                        }
+                    });
+
                     veg.on('value', function (snapshot) {
                         var str = snapshot.val();
                         document.getElementById('storeName').textContent = icons[e].name;
-                        document.getElementById('storePrice').textContent = icons[e].label;
+                        document.getElementById('storePrice').textContent = icons[e].label.toString();
+
                     })
                     // marker[e].setLabel({
                     //     text: icons[e].name,
@@ -283,11 +318,11 @@
             methods: {
                 alert1() {
                     this.show = !this.show;
-                    this.message = "【系統通知】<br>貨品滯銷3天囉!<br>建議您將貨品價格調降為9元"
+                    this.message = "【系統通知】<br><span style='color:green;font-size:1.4em' class='font-weight-bold'>貨品滯銷</span>3天囉!<br>建議您將<img src='/img/cabbage.png' height=30px alt=''>價格調降為<span style='color:green;font-size:1.4em' class='font-weight-bold'>31</span>元"
                 },
                 alert2() {
                     this.show = !this.show;
-                    this.message = "【系統通知】<br>颱風即將於下周登陸!<br>建議您將貨品價格調漲為99元"
+                    this.message = "【系統通知】<br><span style='color:red;font-size:1.4em' class='font-weight-bold'>颱風</span>即將於下周登陸!<br>建議您將<img src='/img/cabbage.png' height=30px alt=''>價格調漲為<span style='color:red;font-size:1.4em' class='font-weight-bold'>52</span>元"
                 }
             }
         })
