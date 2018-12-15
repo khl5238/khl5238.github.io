@@ -211,12 +211,14 @@
         // Get a reference to the database service
         var database = firebase.database();
         // firebase.database().ref('myFriends').set({friend1:'tom',friend2:'bob'});
-        var veg = firebase.database().ref();
-        veg.on('value', function (snapshot) {
-            var str = snapshot.val();
-            document.getElementById('test').textContent = JSON.stringify(str, null, 3);
+        // Read Data
+        // var veg = firebase.database().ref('stores/');
+        // veg.on('value', function (snapshot) {
+        //     var str = snapshot.val()[2];
 
-        })
+        //     document.getElementById('test').textContent = JSON.stringify(str, null, 3);
+
+        // })
 
         // console.log(database);
     </script>

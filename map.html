@@ -111,8 +111,9 @@
 
 
         <div id="detail" class="box fixed-bottom">
-
-            <h3 id="storeName" class="text-center mt-1">請選擇寄賣賣場</h3>
+            <h4 id="storeNameSelect1" class="text-center font-weight-bold" ></h4>
+            <h6 id="storeNameSelect2" class="text-center" ></h6>
+            <h3 id="storeName" class="text-center mt-1" >請選擇寄賣賣場</h3>
             <div class="row">
                 <div class="col-3">
                     <img class="pl-4" src="/img/cabbage.png" height=50px alt="">
@@ -282,7 +283,9 @@
 
                     veg.on('value', function (snapshot) {
                         var str = snapshot.val();
-                        document.getElementById('storeName').textContent = icons[e].name;
+                        document.getElementById('storeName').textContent = "";
+                        document.getElementById('storeNameSelect1').textContent = "石二鍋";
+                        document.getElementById('storeNameSelect2').textContent = icons[e].name;
                         document.getElementById('storePrice').textContent = icons[e].label.toString();
 
                     })
